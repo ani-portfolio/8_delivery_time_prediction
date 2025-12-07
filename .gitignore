@@ -5,3 +5,7 @@
 /logs
 
 /results
+
+/other_notebooks
+
+__pycache__/
