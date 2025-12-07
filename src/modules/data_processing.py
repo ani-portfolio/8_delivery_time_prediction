@@ -1,5 +1,8 @@
-from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
+import numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 class FoodDeliveryPreprocessor(BaseEstimator, TransformerMixin):
     def __init__(self, mean_impute_cols, median_impute_cols, mode_impute_cols):
@@ -14,9 +17,6 @@ class FoodDeliveryPreprocessor(BaseEstimator, TransformerMixin):
         self.encoded_cols = None
     
     def fit(self, X, y=None):
-        # Fit imputers
-        from sklearn.impute import SimpleImputer
-        import numpy as np
         
         X_copy = X.copy()
         
@@ -56,7 +56,6 @@ class FoodDeliveryPreprocessor(BaseEstimator, TransformerMixin):
         X_copy = self._driver_stats(X_copy)
         
         # Fit scaler and encoder
-        from sklearn.preprocessing import StandardScaler, OneHotEncoder
         
         self.scaled_cols = X_copy.drop(['time_taken_min'], axis=1).select_dtypes([float, int]).columns.tolist()
         self.scaler = StandardScaler()
@@ -89,7 +88,6 @@ class FoodDeliveryPreprocessor(BaseEstimator, TransformerMixin):
         return X_copy
     
     def _distance(self, df):
-        import numpy as np
         R = 6371
         lat1, lon1, lat2, lon2 = map(np.radians, [df['restaurant_latitude'], df['restaurant_longitude'], 
                                                      df['delivery_location_latitude'], df['delivery_location_longitude']])
