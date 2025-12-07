@@ -28,6 +28,7 @@ def main():
     model = joblib.load(f'{ARTIFACTS_DIR}/trained_model.pkl')
     preprocessor = joblib.load(f'{ARTIFACTS_DIR}/preprocessor.pkl')
 
+    # DUMMY inference data 
     inference_processed = preprocessor.transform(etl_data)  # No splitting happens
     df_full_x, df_full_y, df_train_id, df_test_x, df_test_y, df_test_id = feature_target_split(inference_processed, inference_processed, features, target)
 
